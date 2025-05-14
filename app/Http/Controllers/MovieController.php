@@ -17,4 +17,10 @@ class MovieController extends Controller
             'lastPage' => $movies->lastPage(),
         ]);
     }
+    public function show($id)
+    {
+        $movie = Movie::with('category')->findOrFail($id);
+        return view('movie_detail', compact('movie'));
+    }
+
 }

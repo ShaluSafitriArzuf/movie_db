@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
+ 
 class MovieController extends Controller
 {
     // Tampilkan daftar movie dengan pagination

@@ -2,6 +2,12 @@
 
 @section('content')
 <h2 class="mb-4">Form Data Movie</h2>
+<div class="mb-3 row">
+  <div>
+    <a href="{{ route('dataMovie') }}" class="btn btn-primary">Data Movie</a>
+
+  </div>
+</div>
 
 <form action="{{ route('movies.store') }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
    @csrf {{-- Jangan lupa token CSRF untuk keamanan --}}

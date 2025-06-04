@@ -5,87 +5,93 @@
 @section('content')
 <style>
     body {
-        background: #e6f0e6; /* Hijau muda soft */
+        background-color: #ffffff; /* putih bersih */
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
     }
-    .card {
-        background: #f0faf0; /* putih kehijauan */
-        border: 2px solid #4caf50; /* hijau daun */
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
-    }
-    h1, h2, h5 {
-        color: #2e7d32; /* hijau gelap */
-        font-weight: 700;
-    }
-    p {
-        color: #336633;
-        font-size: 1.05rem;
-    }
-    hr {
-        border-color: #a5d6a7; /* hijau pastel */
-        border-width: 2px;
-    }
-    .btn-secondary {
-        background-color: #4caf50;
-        border-color: #388e3c;
+
+    h2 {
+        font-size: 22px;
         font-weight: bold;
+        margin-bottom: 15px;
+        color: #333;
     }
-    .btn-secondary:hover {
-        background-color: #388e3c;
-        border-color: #2e7d32;
+
+    .container-detail {
+        max-width: 1000px;
+        margin: 40px auto;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        display: flex;
+        gap: 25px;
+        align-items: flex-start;
     }
-    .cover-image {
-        width: 120px;
+
+    .container-detail img {
+        width: 300px;
         height: auto;
+        border-radius: 8px;
         object-fit: cover;
-        border-radius: 12px;
-        box-shadow: 0 0 10px #4caf50aa;
-        margin-top: 15px;
     }
-    .content-wrapper {
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 20px 30px;
-        background-image: url('https://www.transparenttextures.com/patterns/leaf.png');
-        background-repeat: repeat;
-        border-radius: 15px;
-        box-shadow: 0 6px 12px rgba(0, 100, 0, 0.1);
+
+    .movie-info {
+        flex: 1;
+    }
+
+    .movie-info p {
+        color: #444;
+        line-height: 1.6;
+        margin-bottom: 8px;
+    }
+
+    .movie-info .category {
+        font-style: italic;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .btn-back {
+        background-color: #abb6ab;
+        color: white;
+        padding: 6px 14px;
+        border: none;
+        border-radius: 6px;
+        margin-top: 10px;
+        display: inline-block;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .btn-back:hover {
+        background-color: #388e3c;
     }
 </style>
 
+<h2 style="text-align:center;">Detail Movie</h2>
+
 @if ($movie)
-    <h1 class="mb-4 text-center">Detail Movie</h1>
+    <div class="container-detail">
+        <img src="{{ asset($movie->cover_image) }}" alt="{{ $movie->title }}">
 
-    <div class="card content-wrapper">
-        <div class="text-center">
-            <img src="{{ asset($movie->cover_image) }}" alt="{{ $movie->title }}" class="cover-image">
-        </div>
-        <div class="card-body">
-            <h2 class="card-title text-center">{{ $movie->title }}</h2>
-            <p class="text-muted mb-2 text-center">
-                <strong>Category:</strong> {{ $movie->category->category_name ?? '-' }}
-            </p>
-            <p class="mb-2 text-center">
-                <strong>Actors:</strong> {{ $movie->actors }}
-            </p>
-            <p class="mb-2 text-center">
-                <strong>Year:</strong> {{ $movie->year }}
-            </p>
-            <hr>
-            <h5>Synopsis</h5>
-            <p>{{ $movie->synopsis ?: 'No synopsis available.' }}</p>
+        <div class="movie-info">
+            <h3>{{ $movie->title }}</h3>
+            <p>{{ $movie->synopsis }}</p>
+            <p><strong>Year:</strong> {{ $movie->year }}</p>
+            <p><strong>Actors:</strong> {{ $movie->actors }}</p>
+            <p class="category"><strong>Category:</strong> {{ $movie->category->category_name ?? '-' }}</p>
 
-            <div class="text-center">
-                <a href="{{ route('dataMovie') }}" class="btn btn-secondary mt-3">Kembali</a>
-            </div>
+            <a href="{{ route('dataMovie') }}" class="btn-back">Back</a>
         </div>
     </div>
 @else
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-warning text-center" style="margin: 50px auto; max-width: 600px;">
         Data movie tidak ditemukan.
     </div>
-    <a href="{{ route('dataMovie') }}" class="btn btn-danger">Kembali</a>
+    <div style="text-align:center;">
+        <a href="{{ route('dataMovie') }}" class="btn-back">Kembali</a>
+    </div>
 @endif
 @endsection

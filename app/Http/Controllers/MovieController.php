@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Movie;
-use Illuminate\Http\Request;
+use App\Models\Category;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class MovieController extends Controller
 {
@@ -75,16 +76,18 @@ class MovieController extends Controller
 
     public function destroy($id)
     {
-        $movie = Movie::findOrFail($id);
+        if (Gate::allows('delete-movie')) {
+            $movie = Movie::findOrFail($id);
 
-        // Hapus cover image jika ada
-        if ($movie->cover_image && file_exists(public_path('storage/' . $movie->cover_image))) {
-            unlink(public_path('storage/' . $movie->cover_image));
+            // Hapus cover image jika ada
+            if ($movie->cover_image && file_exists(public_path('storage/' . $movie->cover_image))) {
+                unlink(public_path('storage/' . $movie->cover_image));
+            }
+
+            $movie->delete();
+
+            return redirect()->route('dataMovie')->with('success', 'Data movie berhasil dihapus.');
         }
-
-        $movie->delete();
-
-        return redirect()->route('dataMovie')->with('success', 'Data movie berhasil dihapus.');
     }
 
     public function update(Request $request, $id)

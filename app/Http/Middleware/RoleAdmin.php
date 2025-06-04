@@ -20,6 +20,6 @@ class RoleAdmin
 
             return $next($request);
         }
-        abort(403, 'Middleware action.');
+        abort(403, 'Akses ditolak, hanya admin yang boleh');
     }
 }
